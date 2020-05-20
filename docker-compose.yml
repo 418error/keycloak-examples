@@ -1,0 +1,28 @@
+version: "2.4"
+
+volumes:
+  postgres_data:
+    driver: local
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+    ports:
+      - 15432:5432
+  keycloak:
+    build:
+      context: ./keycloak
+    container_name: keycloak
+    volumes:
+      - ./keycloak/config/realms/:/realms
+      - ./plugins/deploy-me/:/opt/jboss/keycloak/standalone/deployments/
+    ports:
+      - 9191:8080
+    depends_on:
+      - postgres
