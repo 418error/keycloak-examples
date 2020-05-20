@@ -21,7 +21,6 @@ services:
     container_name: keycloak
     volumes:
       - ./keycloak/config/realms/:/realms
-      - ./plugins/deploy-me/:/opt/jboss/keycloak/standalone/deployments/
     ports:
       - 9191:8080
     depends_on:
